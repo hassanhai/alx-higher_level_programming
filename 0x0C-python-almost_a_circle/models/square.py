@@ -1,75 +1,64 @@
 #!/usr/bin/python3
+"""Define Square class implement Rectangle
 """
-Square Module
-"""
+
 from models.rectangle import Rectangle
 
 
 class Square(Rectangle):
-    """Sqare Class
-    """
+    """Square class body
+"""
 
     def __init__(self, size, x=0, y=0, id=None):
-        """initialize method
-        args:
-            size: square size
-            x: x position
-            y: y position
-            id: object id
+        """Initialization class props in constructor
         """
         super().__init__(size, size, x, y, id)
 
-    def __str__(self):
-        """print method
-        return:
-            formatted list
-        """
-        return ("[{}] ({}) {}/{} - {}".format(self.__class__.__name__,
-                                              self.id, self.x,
-                                              self.y, self.width))
-
     @property
     def size(self):
-        """width getter method
-        return:
-            size of width and height
+        """ return width size
         """
         return self.width
 
     @size.setter
     def size(self, value):
-        """width and height setter method
-        args:
-            value: size value
-        return:
-            na
+        """module Square height and width
         """
         self.width = value
         self.height = value
 
-    def update(self, *args, **kwargs):
-        """update square method
-        args:
-            args: pointer to arguments
-            kwargs: double pointer to key word arguments
-        return:
-            na
+    def __str__(self):
+        """Square class string
         """
+        return "[Square] ({:d}) {:d}/{:d} - {:d}".format(self.id,
+                                                         self.x,
+                                                         self.y,
+                                                         self.width)
 
-        if args:
-            i = 0
-            listme = ['id', 'size', 'x', 'y']
-            for arg in args:
-                setattr(self, listme[i], arg)
-                i += 1
-            return
+    def update(self, *args, **kwargs):
+        """update square props
+        """
+        if len(args):
+            for i, arg in enumerate(args):
+                if i == 0:
+                    self.id = arg
+                elif i == 1:
+                    self.size = arg
+                elif i == 2:
+                    self.x = arg
+                elif i == 3:
+                    self.y = arg
         else:
             for key, value in kwargs.items():
-                setattr(self, key, value)
+                if hasattr(self, key) is True:
+                    setattr(self, key, value)
 
     def to_dictionary(self):
-        """returns a dictionary of Square
-        return:
-            dictionary
+        """ return dict of class props
         """
-        return {'id': self.id, 'x': self.x, 'size': self.size, 'y': self.y}
+        return {
+            "id": self.id,
+            "size": self.size,
+            "x": self.x,
+            "y": self.y
+        }
